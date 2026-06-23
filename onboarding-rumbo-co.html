@@ -15,13 +15,13 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;display:flex;flex-direction:column}
-.hdr{background:var(--ink);padding:16px 24px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;z-index:200}
+.hdr{background:var(--ink);padding:16px 24px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.45)}
 .hdr-mark{width:32px;height:32px;background:var(--brand);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;color:#fff;font-size:16px}
 .hdr-name{font-family:'DM Serif Display',serif;color:#fff;font-size:18px}
 .hdr-badge{margin-left:auto;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.35);background:rgba(255,255,255,.07);padding:4px 10px;border-radius:20px}
 .wrap{flex:1;background:var(--white)}
-.prg{height:3px;background:var(--ink-20)}
-.prg-fill{height:100%;background:var(--brand);transition:width .4s ease;width:0}
+.prg{height:4px;background:var(--ink-20)}
+.prg-fill{height:100%;background:var(--brand);transition:width .45s cubic-bezier(.4,0,.2,1);width:0}
 .snav{display:flex;padding:18px 24px 0;gap:3px;overflow-x:auto;scrollbar-width:none;background:var(--white)}
 .snav::-webkit-scrollbar{display:none}
 .spill{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:40px;font-size:12px;font-weight:500;color:var(--ink-60);white-space:nowrap;user-select:none}
@@ -47,14 +47,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;dis
 .req{color:var(--err)}
 .biz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
 .biz-tile{border:1.5px solid var(--ink-20);border-radius:var(--r);padding:12px 8px;text-align:center;cursor:pointer;transition:all .18s;background:var(--card);user-select:none}
-.biz-tile:hover{border-color:var(--brand);background:var(--brand-lt)}
-.biz-tile.sel{border-color:var(--brand);background:var(--brand-lt)}
+.biz-tile:hover{border-color:var(--brand);background:var(--brand-lt);transform:translateY(-2px);box-shadow:0 4px 10px rgba(34,81,204,.12)}
+.biz-tile.sel{border-color:var(--brand);background:var(--brand-lt);box-shadow:0 0 0 2px var(--brand)}
 .biz-tile .ti{font-size:20px;display:block;margin-bottom:4px}
 .biz-tile .tl{font-size:12px;font-weight:500;color:var(--ink);line-height:1.3}
 .biz-tile.sel .tl{color:var(--brand-dk);font-weight:600}
-.branch-card{border:1.5px solid var(--ink-20);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;background:var(--card)}
+.branch-card{border:1.5px solid var(--ink-20);border-radius:var(--r);padding:14px 16px;margin-bottom:10px;background:var(--card);box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .branch-card h5{font-size:12px;font-weight:700;color:var(--brand);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
-.cred{border:1.5px solid var(--ink-20);border-radius:var(--r);padding:16px 18px;margin-bottom:10px;background:var(--card)}
+.cred{border:1.5px solid var(--ink-20);border-radius:var(--r);padding:16px 18px;margin-bottom:10px;background:var(--card);box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .cred-h{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .cico{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 .ci-ig{background:#F3E8FB}.ci-fb{background:#E4EDF8}.ci-gm{background:#E4F4EA}.ci-wa{background:#DFF5E8}.ci-tk{background:#FCE8E8}.ci-li{background:#E4ECF8}
@@ -64,35 +64,35 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;dis
 .pass-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--ink-60);font-size:18px;padding:2px;line-height:1}
 .notice{border-radius:var(--r);padding:13px 15px;font-size:13px;line-height:1.6;margin-bottom:20px;display:flex;gap:10px;align-items:flex-start}
 .nicon{font-size:16px;flex-shrink:0;margin-top:1px}
-.n-warn{background:var(--warn-bg);border:1px solid var(--warn-bd);color:var(--warn-tx)}
-.n-blue{background:var(--brand-lt);border:1px solid rgba(34,81,204,.2);color:var(--brand-dk)}
-.n-gray{background:#F1F3F5;border:1px solid var(--ink-20);color:var(--ink-60)}
-.n-green{background:var(--ok-lt);border:1px solid rgba(26,122,74,.2);color:var(--ok)}
+.n-warn{background:var(--warn-bg);border:1px solid var(--warn-bd);border-left:3px solid var(--warn-bd);color:var(--warn-tx)}
+.n-blue{background:var(--brand-lt);border:1px solid rgba(34,81,204,.2);border-left:3px solid var(--brand);color:var(--brand-dk)}
+.n-gray{background:#F1F3F5;border:1px solid var(--ink-20);border-left:3px solid var(--ink-60);color:var(--ink-60)}
+.n-green{background:var(--ok-lt);border:1px solid rgba(26,122,74,.2);border-left:3px solid var(--ok);color:var(--ok)}
 .drive-steps{counter-reset:dst;margin:10px 0 0;padding:0;list-style:none}
 .drive-steps li{counter-increment:dst;font-size:13px;color:var(--brand-dk);padding:5px 0 5px 28px;position:relative;line-height:1.5}
 .drive-steps li::before{content:counter(dst);position:absolute;left:0;top:4px;width:19px;height:19px;background:var(--brand);color:#fff;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .ck-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .ck-item{display:flex;align-items:center;gap:9px;padding:11px 13px;border:1.5px solid var(--ink-20);border-radius:var(--r);cursor:pointer;transition:all .18s;font-size:13px;color:var(--ink);user-select:none;background:var(--card)}
 .ck-item input{display:none}
-.ck-item.sel{border-color:var(--brand);background:var(--brand-lt);color:var(--brand-dk);font-weight:500}
+.ck-item.sel{border-color:var(--brand);background:var(--brand-lt);color:var(--brand-dk);font-weight:500;box-shadow:0 0 0 1px var(--brand)}
 .ck-box{width:17px;height:17px;border:1.5px solid var(--ink-20);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .15s}
 .ck-item.sel .ck-box{background:var(--brand);border-color:var(--brand);color:#fff}
 .ck-full{display:flex;align-items:flex-start;gap:11px;padding:14px 16px;border:1.5px solid var(--ink-20);border-radius:var(--r);cursor:pointer;transition:all .18s;font-size:13px;line-height:1.5;user-select:none;background:var(--card)}
 .ck-full input{display:none}
-.ck-full.sel{border-color:var(--brand);background:var(--brand-lt);color:var(--brand-dk)}
+.ck-full.sel{border-color:var(--brand);background:var(--brand-lt);color:var(--brand-dk);box-shadow:0 0 0 1px var(--brand)}
 .ck-full .ck-box{margin-top:2px}
 .ck-full.sel .ck-box{background:var(--brand);border-color:var(--brand);color:#fff}
 .btn-row{display:flex;gap:10px;margin-top:24px}
 .btn{padding:12px 22px;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .btn-p{background:var(--brand);color:#fff;flex:1}
-.btn-p:hover:not(:disabled){background:var(--brand-dk);transform:translateY(-1px)}
+.btn-p:hover:not(:disabled){background:var(--brand-dk);transform:translateY(-1px);box-shadow:0 6px 18px rgba(34,81,204,.35)}
 .btn-p:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .btn-s{background:var(--ink-20);color:var(--ink-60)}
 .btn-s:hover{background:#DDE0E8}
 .btn-full{width:100%;padding:14px;font-size:15px}
 .spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sp .65s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.scard{border:1.5px solid var(--ink-20);border-radius:var(--r);padding:16px 18px;background:var(--card);margin-bottom:14px}
+.scard{border:1.5px solid var(--ink-20);border-radius:var(--r);padding:16px 18px;background:var(--card);margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .scard h4{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-60);margin-bottom:10px}
 .si{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--ink-20);gap:12px;font-size:13px}
 .si:last-child{border-bottom:none}
@@ -100,7 +100,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;dis
 .si-v{color:var(--ink);font-weight:500;text-align:right;word-break:break-word}
 .si-ok{color:var(--ok)}
 .div{height:1px;background:var(--ink-20);margin:20px 0}
-.suc-scr{display:none;flex-direction:column;align-items:center;text-align:center;padding:52px 24px;min-height:60vh}
+.suc-scr{display:none;flex-direction:column;align-items:center;text-align:center;padding:52px 24px;min-height:60vh;background:linear-gradient(160deg,var(--white) 55%,var(--ok-lt) 100%)}
 .suc-scr.act{display:flex}
 .suc-ico{width:64px;height:64px;border-radius:50%;background:var(--ok-lt);display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:18px}
 .suc-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);margin-bottom:8px}
@@ -146,7 +146,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;dis
   <div class="sdesc">Esta información me permite preparar todo antes de empezar. Toma unos minutos.</div>
   <div class="fg">
     <label class="fl" for="biz_name">Nombre del negocio <span class="req">*</span></label>
-    <input class="fi" type="text" id="biz_name" placeholder="Nombre como lo conocen tus clientes" autocomplete="organization" name="biz_name">
+    <input class="fi" type="text" id="biz_name" placeholder="Nombre como lo conocen tus clientes" autocomplete="organization" name="biz_name" maxlength="150">
   </div>
   <div class="fg">
     <label class="fl">¿A qué se dedica tu negocio? <span class="req">*</span></label>
@@ -171,17 +171,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;dis
   <div class="frow">
     <div class="fg">
       <label class="fl" for="owner_name">Nombre del dueño / encargado <span class="req">*</span></label>
-      <input class="fi" type="text" id="owner_name" name="propietario" placeholder="Tu nombre completo" autocomplete="name">
+      <input class="fi" type="text" id="owner_name" name="propietario" placeholder="Tu nombre completo" autocomplete="name" maxlength="100">
     </div>
     <div class="fg">
       <label class="fl" for="biz_phone">WhatsApp / teléfono <span class="req">*</span></label>
-      <input class="fi" type="tel" id="biz_phone" name="telefono" placeholder="09…" autocomplete="tel" inputmode="tel">
+      <input class="fi" type="tel" id="biz_phone" name="telefono" placeholder="09…" autocomplete="tel" inputmode="tel" maxlength="20">
     </div>
   </div>
   <div class="fg">
     <label class="fl" for="owner_email">Correo electrónico <span class="req">*</span></label>
     <span class="fh">Para enviarte la propuesta, el contrato y el reporte mensual.</span>
-    <input class="fi" type="email" id="owner_email" name="correo" placeholder="tucorreo@email.com" autocomplete="email" inputmode="email">
+    <input class="fi" type="email" id="owner_email" name="correo" placeholder="tucorreo@email.com" autocomplete="email" inputmode="email" maxlength="254">
   </div>
   <div class="fg">
     <label class="fl" for="biz_branches">¿Cuántos puntos o sucursales tienes? <span class="req">*</span></label>
@@ -265,8 +265,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;dis
     <div class="cred-h"><div class="cico ci-ig">📸</div>Instagram &amp; Facebook</div>
     <span class="fh" style="margin-bottom:10px">Instagram y Facebook se gestionan juntos desde Meta Business Suite. Te enviaré una <strong>solicitud de socio</strong> a tu Página; solo debes aceptarla.</span>
     <div class="frow">
-      <div class="fg"><label class="fl" for="ig_user">Usuario de Instagram (@)</label><input class="fi" type="text" id="ig_user" name="ig_usuario" placeholder="@tunegocio" autocomplete="off" spellcheck="false"></div>
-      <div class="fg"><label class="fl" for="fb_page">Nombre o enlace de tu Página de Facebook</label><input class="fi" type="text" id="fb_page" name="fb_pagina" placeholder="Nombre o facebook.com/tunegocio"></div>
+      <div class="fg"><label class="fl" for="ig_user">Usuario de Instagram (@)</label><input class="fi" type="text" id="ig_user" name="ig_usuario" placeholder="@tunegocio" autocomplete="off" spellcheck="false" maxlength="50"></div>
+      <div class="fg"><label class="fl" for="fb_page">Nombre o enlace de tu Página de Facebook</label><input class="fi" type="text" id="fb_page" name="fb_pagina" placeholder="Nombre o facebook.com/tunegocio" maxlength="200"></div>
     </div>
     <div class="fg" style="margin-bottom:0"><div class="ck-full" onclick="ckSingle(this,'ig_grant')"><input type="checkbox" id="ig_grant" name="ig_acepta_socio"><div class="ck-box"></div><span>Acepto recibir y aprobar la solicitud de socio de Rumbo Co en Meta Business Suite.</span></div></div>
   </div>
@@ -274,25 +274,25 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;dis
   <div class="cred">
     <div class="cred-h"><div class="cico ci-gm">📍</div>Google Business (Maps)</div>
     <span class="fh" style="margin-bottom:10px">En tu ficha de Google Business Profile, agrégame como <strong>Administrador</strong> con el correo de abajo. Te explico cómo en un mensaje tras recibir esto.</span>
-    <div class="fg" style="margin-bottom:0"><label class="fl" for="gmb_email">Gmail con el que se creó tu ficha de Google</label><span class="fh">No tu contraseña — solo el correo, para confirmar que es la cuenta correcta.</span><input class="fi" type="email" id="gmb_email" name="gmb_correo" placeholder="correo@gmail.com" autocomplete="off"></div>
+    <div class="fg" style="margin-bottom:0"><label class="fl" for="gmb_email">Gmail con el que se creó tu ficha de Google</label><span class="fh">No tu contraseña — solo el correo, para confirmar que es la cuenta correcta.</span><input class="fi" type="email" id="gmb_email" name="gmb_correo" placeholder="correo@gmail.com" autocomplete="off" maxlength="254"></div>
   </div>
 
   <div class="cred">
     <div class="cred-h"><div class="cico ci-wa">💬</div>WhatsApp Business</div>
     <div class="frow">
-      <div class="fg"><label class="fl" for="wa_number">Número</label><input class="fi" type="tel" id="wa_number" name="wa_numero" placeholder="09…" autocomplete="off"></div>
+      <div class="fg"><label class="fl" for="wa_number">Número</label><input class="fi" type="tel" id="wa_number" name="wa_numero" placeholder="09…" autocomplete="off" maxlength="20"></div>
       <div class="fg"><label class="fl" for="wa_sim">¿Quién tiene acceso al celular/SIM?</label><select class="fs" id="wa_sim" name="wa_sim"><option value="">—</option><option>Yo tengo acceso al celular</option><option>Lo usa otra persona del negocio</option><option>Quiero una línea nueva para esto</option></select></div>
     </div>
   </div>
 
   <div class="cred">
     <div class="cred-h"><div class="cico ci-tk">🎵</div>TikTok<span class="copt">(opcional)</span></div>
-    <div class="fg" style="margin-bottom:0"><label class="fl" for="tt_user">Usuario de TikTok</label><span class="fh">Te invitaré como miembro a través de TikTok Business Center — sin compartir clave.</span><input class="fi" type="text" id="tt_user" name="tt_usuario" placeholder="@tunegocio" autocomplete="off"></div>
+    <div class="fg" style="margin-bottom:0"><label class="fl" for="tt_user">Usuario de TikTok</label><span class="fh">Te invitaré como miembro a través de TikTok Business Center — sin compartir clave.</span><input class="fi" type="text" id="tt_user" name="tt_usuario" placeholder="@tunegocio" autocomplete="off" maxlength="50"></div>
   </div>
 
   <div class="cred">
     <div class="cred-h"><div class="cico ci-li">💼</div>LinkedIn<span class="copt">(opcional — B2B)</span></div>
-    <div class="fg" style="margin-bottom:0"><label class="fl" for="li_page">Enlace de tu Página de empresa en LinkedIn</label><span class="fh">Me agregas como administrador de la Página desde "Administrar" — sin compartir clave.</span><input class="fi" type="url" id="li_page" name="li_pagina" placeholder="https://www.linkedin.com/company/…"></div>
+    <div class="fg" style="margin-bottom:0"><label class="fl" for="li_page">Enlace de tu Página de empresa en LinkedIn</label><span class="fh">Me agregas como administrador de la Página desde "Administrar" — sin compartir clave.</span><input class="fi" type="url" id="li_page" name="li_pagina" placeholder="https://www.linkedin.com/company/…" maxlength="500"></div>
   </div>
 
   <div class="notice n-blue"><div class="nicon">🛡️</div><div><strong>¿Y si alguna cuenta no permite invitarme?</strong> En ese caso te enviaré un <strong>enlace seguro de un solo uso</strong> para que compartas la clave de forma cifrada — <em>nunca</em> por este formulario, correo o WhatsApp. Al terminar el contrato, retiro mi acceso de todas tus cuentas.</div></div>
@@ -319,7 +319,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;dis
   <div class="fg">
     <label class="fl" for="drive_link">🔗 Enlace a tu carpeta de Drive / Dropbox / OneDrive <span class="req">*</span></label>
     <span class="fh">Verifica que diga "Cualquiera con el enlace puede ver" antes de copiarlo.</span>
-    <input class="fi" type="url" id="drive_link" placeholder="https://drive.google.com/drive/folders/…" name="drive_link">
+    <input class="fi" type="url" id="drive_link" placeholder="https://drive.google.com/drive/folders/…" name="drive_link" maxlength="500">
   </div>
   <div class="fg">
     <label class="fl">¿Qué tipo de material subiste? <span class="req">*</span></label>
@@ -507,7 +507,16 @@ function validate(s){
     }
   }
   if(s===4){
-    if(!v('drive_link')){markErr('drive_link');showErr('Pega el enlace de tu carpeta de Drive. Si no tienes archivos aún, escribe pendiente.');return false;}
+    const dl=v('drive_link');
+    if(!dl){markErr('drive_link');showErr('Pega el enlace de tu carpeta de Drive. Si no tienes archivos aún, escribe pendiente.');return false;}
+    if(dl.startsWith('http')){try{new URL(dl);}catch{markErr('drive_link');showErr('El enlace no parece ser una URL válida. Debe comenzar con https://');return false;}}
+  }
+  if(s===3){
+    const li=v('li_page');
+    if(li&&li.length>0){
+      try{const url=new URL(li);if(!url.hostname.includes('linkedin.com')){markErr('li_page');showErr('El enlace de LinkedIn debe ser de linkedin.com');return false;}}
+      catch{markErr('li_page');showErr('El enlace de LinkedIn debe ser una URL completa (https://linkedin.com/…)');return false;}
+    }
   }
   if(s===5){
     collectChecks();
@@ -547,12 +556,12 @@ function syncBranches(){
     }
     html+=`<div class="branch-card"><h5>📍 Sucursal ${i}${n===1?' (principal)':''}</h5>
       <div class="fg"><label class="fl">Nombre o zona <span class="req">*</span></label>
-        <input class="fi" type="text" id="branch_name_${i}" name="branch_name_${i}" placeholder="Ej. Centro, El Vergel, Av. Solano…"></div>
+        <input class="fi" type="text" id="branch_name_${i}" name="branch_name_${i}" placeholder="Ej. Centro, El Vergel, Av. Solano…" maxlength="150"></div>
       <div class="fg"><label class="fl">Dirección completa</label>
         <span class="fh">Calle y número, o pega el enlace de Google Maps de este punto.</span>
-        <input class="fi" type="text" id="branch_addr_${i}" name="branch_addr_${i}" placeholder="Dirección o enlace de Maps"></div>
+        <input class="fi" type="text" id="branch_addr_${i}" name="branch_addr_${i}" placeholder="Dirección o enlace de Maps" maxlength="300"></div>
       <div class="fg"><label class="fl">Teléfono de esta sucursal</label>
-        <input class="fi" type="tel" id="branch_phone_${i}" name="branch_phone_${i}" placeholder="09…" inputmode="tel"></div>
+        <input class="fi" type="tel" id="branch_phone_${i}" name="branch_phone_${i}" placeholder="09…" inputmode="tel" maxlength="20"></div>
       <div class="fg" style="margin-bottom:0">
         <label class="fl">Horario de atención de esta sucursal</label>
         <span class="fh">Indica la hora de apertura y cierre de cada día. Si no abre, elige "Cerrado".</span>
@@ -602,8 +611,8 @@ function addProductRow(name,desc){
   const div=document.createElement('div');
   div.className='prod-row';div.id='prodrow_'+k;
   div.innerHTML=`<div class="prod-fields">
-      <input class="fi" type="text" id="prod_name_${k}" name="prod_name_${k}" placeholder="Nombre del producto o servicio">
-      <input class="fi" type="text" id="prod_desc_${k}" name="prod_desc_${k}" placeholder="Descripción breve (ingredientes, qué incluye, precio…)">
+      <input class="fi" type="text" id="prod_name_${k}" name="prod_name_${k}" placeholder="Nombre del producto o servicio" maxlength="200">
+      <input class="fi" type="text" id="prod_desc_${k}" name="prod_desc_${k}" placeholder="Descripción breve (ingredientes, qué incluye, precio…)" maxlength="300">
     </div>
     <button type="button" class="btn-del" onclick="delProductRow(${k})" aria-label="Eliminar">×</button>`;
   document.getElementById('prodRows').appendChild(div);
@@ -762,7 +771,7 @@ function copyText(){
   catch(e){try{document.execCommand('copy');afterCopy(true);}catch{afterCopy(false);}}
   if(TU_WHATSAPP&&TU_WHATSAPP.length>6){
     const p=encodeURIComponent('Hola, soy '+v('biz_name')+'. Acabo de completar el formulario de Rumbo Co.');
-    setTimeout(()=>window.open('https://wa.me/'+TU_WHATSAPP+'?text='+p,'_blank'),800);
+    setTimeout(()=>window.open('https://wa.me/'+TU_WHATSAPP+'?text='+p,'_blank','noopener,noreferrer'),800);
   }
 }
 function afterCopy(ok){const el=document.getElementById('copyOk');el.textContent=ok?'✓ Copiado — pégalo en WhatsApp.':'Selecciona el texto manualmente (Ctrl+A, Ctrl+C).';el.style.color=ok?'var(--ok)':'var(--err)';setTimeout(()=>{el.textContent='';},5000);}
