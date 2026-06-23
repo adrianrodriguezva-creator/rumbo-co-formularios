@@ -464,6 +464,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;dis
 <script>
 const FORMSPREE_ID='mjgdjjkv';
 const TU_WHATSAPP='593963090563';
+const MAKE_WEBHOOK=''; // Pega aquí la URL del webhook de Make
 let step=1;const TOTAL=6;
 
 function nav(n){
@@ -752,6 +753,35 @@ async function doSubmit(){
       const res=await fetch('https://formspree.io/f/'+FORMSPREE_ID,{method:'POST',body:fd,headers:{Accept:'application/json'}});
       if(res.ok)sent=true;else console.warn('Formspree:',res.status,await res.json().catch(()=>({})));
     }catch(e){console.warn('Red:',e);}
+  }
+  if(MAKE_WEBHOOK){
+    try{
+      await fetch(MAKE_WEBHOOK,{method:'POST',body:JSON.stringify({
+        fecha:now(),
+        negocio:v('biz_name'),
+        propietario:v('owner_name'),
+        correo:v('owner_email'),
+        telefono:v('biz_phone'),
+        tipo:v('biz_type'),
+        sucursales:v('biz_branches'),
+        objetivo:v('biz_goal'),
+        presupuesto:v('biz_budget'),
+        productos:v('biz_products'),
+        plataformas:v('platforms'),
+        ig_usuario:v('ig_user'),
+        fb_pagina:v('fb_page'),
+        gmb_correo:v('gmb_email'),
+        wa_numero:v('wa_number'),
+        tt_usuario:v('tt_user'),
+        li_pagina:v('li_page'),
+        drive_link:v('drive_link'),
+        material:v('material_types'),
+        presencia:v('diag_presence'),
+        canales:v('diag_channels'),
+        competidores:v('diag_competitors'),
+        resumen_completo:txt
+      }),headers:{'Content-Type':'application/json'}});
+    }catch(e){console.warn('Make webhook:',e);}
   }
   btn.disabled=false;btn.innerHTML='✓ Enviado';
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('act'));
