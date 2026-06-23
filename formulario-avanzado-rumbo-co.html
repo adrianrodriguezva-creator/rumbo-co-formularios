@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datos avanzados · Rumbo Co</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#1A7A4A;--brand-dk:#145E39;--brand-lt:#E8F5EE;
+  --ink:#141820;--ink-60:#606878;--ink-20:#E8EAF0;
+  --white:#F9FAFB;--card:#FFFFFF;--accent:#2251CC;
+  --warn-bg:#FFFBEB;--warn-bd:#FCD34D;--warn-tx:#78450A;--err:#C0392B;--r:10px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+.hdr{background:var(--ink);padding:16px 24px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.07);position:sticky;top:0;z-index:200}
+.hdr-mark{width:32px;height:32px;background:var(--brand);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;color:#fff;font-size:16px}
+.hdr-name{font-family:'DM Serif Display',serif;color:#fff;font-size:18px}
+.hdr-badge{margin-left:auto;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.35);background:rgba(255,255,255,.07);padding:4px 10px;border-radius:20px}
+.wrap{flex:1;background:var(--white)}
+.prg{height:3px;background:var(--ink-20)}
+.prg-fill{height:100%;background:var(--brand);transition:width .4s ease;width:0}
+.intro{max-width:640px;margin:0 auto;padding:32px 24px 0}
+.intro-card{background:var(--brand-lt);border:1px solid rgba(26,122,74,.2);border-radius:var(--r);padding:18px 20px;font-size:13px;color:var(--brand-dk);line-height:1.6;margin-bottom:8px}
+.snav{display:flex;padding:18px 24px 0;gap:3px;overflow-x:auto;scrollbar-width:none;background:var(--white)}
+.snav::-webkit-scrollbar{display:none}
+.spill{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:40px;font-size:12px;font-weight:500;color:var(--ink-60);white-space:nowrap;user-select:none}
+.spill.act{background:var(--brand-lt);color:var(--brand-dk)}
+.spill.don{background:var(--brand-lt);color:var(--brand)}
+.snum{width:18px;height:18px;border-radius:50%;background:var(--ink-20);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.spill.act .snum{background:var(--brand);color:#fff}
+.spill.don .snum{background:var(--brand);color:#fff}
+.sec{display:none;padding:24px 24px 56px;max-width:640px;margin:0 auto;animation:fu .3s ease}
+.sec.act{display:block}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--brand);margin-bottom:5px}
+.stitle{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ink);line-height:1.25;margin-bottom:6px}
+.sdesc{color:var(--ink-60);font-size:14px;line-height:1.6;margin-bottom:24px}
+.fg{margin-bottom:18px}
+.fl{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.fh{font-size:12px;color:var(--ink-60);display:block;margin-bottom:4px;line-height:1.5}
+.fi,.fs,.ft{width:100%;padding:11px 13px;border:1.5px solid var(--ink-20);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--card);outline:none;transition:border-color .18s,box-shadow .18s;-webkit-appearance:none}
+.fi:focus,.fs:focus,.ft:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(26,122,74,.1)}
+.fi.err,.fs.err,.ft.err{border-color:var(--err);box-shadow:0 0 0 3px rgba(192,57,43,.1)}
+.ft{resize:vertical;min-height:76px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.req{color:var(--err)}
+.module{border:1.5px solid var(--ink-20);border-radius:var(--r);padding:0;margin-bottom:14px;background:var(--card);overflow:hidden;transition:all .2s}
+.module.on{border-color:var(--brand);box-shadow:0 2px 12px rgba(26,122,74,.08)}
+.module-head{display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;user-select:none}
+.module-head:hover{background:var(--brand-lt)}
+.module.on .module-head{background:var(--brand-lt)}
+.module-ico{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;background:var(--white)}
+.module.on .module-ico{background:#fff}
+.module-info{flex:1}
+.module-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.module-sub{font-size:12px;color:var(--ink-60);line-height:1.4}
+.module-toggle{width:42px;height:24px;border-radius:14px;background:var(--ink-20);position:relative;transition:all .2s;flex-shrink:0}
+.module.on .module-toggle{background:var(--brand)}
+.module-toggle::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:all .2s}
+.module.on .module-toggle::after{left:21px}
+.module-body{display:none;padding:4px 18px 18px;border-top:1px solid var(--ink-20)}
+.module.on .module-body{display:block}
+.notice{border-radius:var(--r);padding:13px 15px;font-size:13px;line-height:1.6;margin-bottom:20px;display:flex;gap:10px;align-items:flex-start}
+.nicon{font-size:16px;flex-shrink:0;margin-top:1px}
+.n-warn{background:var(--warn-bg);border:1px solid var(--warn-bd);color:var(--warn-tx)}
+.n-blue{background:#EBF0FC;border:1px solid rgba(34,81,204,.2);color:#1A3EA0}
+.n-green{background:var(--brand-lt);border:1px solid rgba(26,122,74,.2);color:var(--brand-dk)}
+.n-gray{background:#F1F3F5;border:1px solid var(--ink-20);color:var(--ink-60)}
+.drive-steps{counter-reset:dst;margin:8px 0 0;padding:0;list-style:none}
+.drive-steps li{counter-increment:dst;font-size:13px;color:var(--brand-dk);padding:4px 0 4px 26px;position:relative;line-height:1.5}
+.drive-steps li::before{content:counter(dst);position:absolute;left:0;top:3px;width:18px;height:18px;background:var(--brand);color:#fff;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.recipe-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:end}
+.recipe-row .fl{font-size:11px}
+.btn-add{background:var(--brand-lt);color:var(--brand-dk);border:1px dashed var(--brand);border-radius:var(--r);padding:9px;font-size:13px;font-weight:600;cursor:pointer;width:100%;margin-top:4px;font-family:'DM Sans',sans-serif}
+.btn-del{background:#FDEAEA;color:var(--err);border:none;border-radius:8px;width:36px;height:40px;cursor:pointer;font-size:16px;flex-shrink:0}
+.ck-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ck-item{display:flex;align-items:center;gap:9px;padding:11px 13px;border:1.5px solid var(--ink-20);border-radius:var(--r);cursor:pointer;transition:all .18s;font-size:13px;color:var(--ink);user-select:none;background:var(--card)}
+.ck-item input{display:none}
+.ck-item.sel{border-color:var(--brand);background:var(--brand-lt);color:var(--brand-dk);font-weight:500}
+.ck-box{width:17px;height:17px;border:1.5px solid var(--ink-20);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .15s}
+.ck-item.sel .ck-box{background:var(--brand);border-color:var(--brand);color:#fff}
+.ck-full{display:flex;align-items:flex-start;gap:11px;padding:14px 16px;border:1.5px solid var(--ink-20);border-radius:var(--r);cursor:pointer;transition:all .18s;font-size:13px;line-height:1.5;user-select:none;background:var(--card)}
+.ck-full input{display:none}
+.ck-full.sel{border-color:var(--brand);background:var(--brand-lt);color:var(--brand-dk)}
+.ck-full .ck-box{margin-top:2px}
+.ck-full.sel .ck-box{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn-row{display:flex;gap:10px;margin-top:24px}
+.btn{padding:12px 22px;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn-p{background:var(--brand);color:#fff;flex:1}
+.btn-p:hover:not(:disabled){background:var(--brand-dk);transform:translateY(-1px)}
+.btn-p:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-s{background:var(--ink-20);color:var(--ink-60)}
+.btn-s:hover{background:#DDE0E8}
+.btn-full{width:100%;padding:14px;font-size:15px}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:sp .65s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.scard{border:1.5px solid var(--ink-20);border-radius:var(--r);padding:16px 18px;background:var(--card);margin-bottom:14px}
+.scard h4{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink-60);margin-bottom:10px}
+.si{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--ink-20);gap:12px;font-size:13px}
+.si:last-child{border-bottom:none}
+.si-k{color:var(--ink-60);flex-shrink:0}
+.si-v{color:var(--ink);font-weight:500;text-align:right;word-break:break-word}
+.div{height:1px;background:var(--ink-20);margin:20px 0}
+.suc-scr{display:none;flex-direction:column;align-items:center;text-align:center;padding:52px 24px;min-height:60vh}
+.suc-scr.act{display:flex}
+.suc-ico{width:64px;height:64px;border-radius:50%;background:var(--brand-lt);display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:18px}
+.suc-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--ink);margin-bottom:8px}
+.suc-desc{color:var(--ink-60);font-size:14px;max-width:400px;line-height:1.65;margin-bottom:24px}
+.copy-box{width:100%;max-width:520px;margin-top:16px}
+.copy-ta{width:100%;padding:14px;border:1.5px solid var(--ink-20);border-radius:var(--r);font-family:monospace;font-size:11.5px;line-height:1.6;color:var(--ink);background:var(--card);height:200px;resize:vertical}
+.copy-ok{font-size:12px;color:var(--brand);margin-top:6px;min-height:18px}
+.confid{background:#FFF5F5;border:1px solid #FECACA;border-radius:var(--r);padding:14px 16px;font-size:12.5px;color:#7F1D1D;line-height:1.6;margin-bottom:18px}
+@media(max-width:560px){.hdr{padding:13px 16px}.snav{padding:14px 16px 0}.intro{padding:24px 16px 0}.sec{padding:20px 16px 44px}.frow,.frow3{grid-template-columns:1fr}.ck-grid{grid-template-columns:1fr}.recipe-row{grid-template-columns:1fr 1fr;gap:6px}.stitle{font-size:21px}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-mark">R</div>
+  <div class="hdr-name">Rumbo Co</div>
+  <div class="hdr-badge">Datos avanzados</div>
+</div>
+<form class="wrap" id="mainForm" action="https://formspree.io/f/mjgdjjkv" method="POST" onsubmit="return false;">
+<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:0;height:0;opacity:0">
+<div class="prg"><div class="prg-fill" id="pFill"></div></div>
+
+<div class="intro">
+  <div class="intro-card">
+    <strong>📊 Este formulario es para servicios premium.</strong><br>
+    Aquí recopilo datos más específicos (financieros, operativos, de inventario) para ofrecerte servicios de mayor valor: costeo de productos, análisis de rentabilidad, reportes ejecutivos y consultoría. <strong>Activa solo los módulos que apliquen a lo que necesitas</strong> — no tienes que llenarlos todos.
+  </div>
+</div>
+
+<div class="snav" id="snav">
+  <div class="spill act" data-s="1"><div class="snum">1</div>Identificación</div>
+  <div class="spill" data-s="2"><div class="snum">2</div>Módulos</div>
+  <div class="spill" data-s="3"><div class="snum">3</div>Archivos</div>
+  <div class="spill" data-s="4"><div class="snum">4</div>Enviar</div>
+</div>
+
+<!-- PASO 1 — IDENTIFICACIÓN -->
+<div class="sec act" id="s1">
+  <div class="eyebrow">Paso 1 de 4</div>
+  <div class="stitle">Identificación</div>
+  <div class="sdesc">Para vincular estos datos con tu onboarding inicial.</div>
+  <div class="confid">
+    🔒 <strong>Confidencialidad reforzada:</strong> Los datos financieros que compartas aquí se usan exclusivamente para preparar tu análisis. No se comparten con nadie, no se publican, y puedes pedir que los elimine en cualquier momento. Si lo prefieres, puedes firmar un acuerdo de confidencialidad por escrito antes de continuar — solo pídemelo.
+  </div>
+  <div class="fg">
+    <label class="fl" for="biz_name">Nombre del negocio <span class="req">*</span></label>
+    <input class="fi" type="text" id="biz_name" placeholder="El mismo que pusiste en el onboarding inicial" name="biz_name">
+  </div>
+  <div class="frow">
+    <div class="fg">
+      <label class="fl" for="owner_name">Tu nombre <span class="req">*</span></label>
+      <input class="fi" type="text" id="owner_name" placeholder="Nombre del dueño/encargado" name="owner_name">
+    </div>
+    <div class="fg">
+      <label class="fl" for="biz_phone">WhatsApp <span class="req">*</span></label>
+      <input class="fi" type="tel" id="biz_phone" placeholder="09…" name="biz_phone">
+    </div>
+  </div>
+  <div class="fg">
+    <label class="fl">¿Qué servicios premium te interesan?</label>
+    <span class="fh">Esto me ayuda a saber qué módulos vas a necesitar. Marca los que te llamen la atención.</span>
+    <div class="ck-grid" style="margin-top:8px">
+      <div class="ck-item" onclick="ckTog(this)"><input value="Costeo de productos"><div class="ck-box"></div>🧮 Costeo de productos</div>
+      <div class="ck-item" onclick="ckTog(this)"><input value="Análisis de rentabilidad"><div class="ck-box"></div>📈 Rentabilidad</div>
+      <div class="ck-item" onclick="ckTog(this)"><input value="Reportes ejecutivos"><div class="ck-box"></div>📊 Reportes mensuales</div>
+      <div class="ck-item" onclick="ckTog(this)"><input value="Control de inventario"><div class="ck-box"></div>📦 Inventario</div>
+      <div class="ck-item" onclick="ckTog(this)"><input value="Análisis de competencia"><div class="ck-box"></div>🔍 Competencia</div>
+      <div class="ck-item" onclick="ckTog(this)"><input value="Consultoría general"><div class="ck-box"></div>💼 Consultoría</div>
+    </div>
+    <input type="hidden" id="services_wanted" name="services_wanted">
+  </div>
+  <div class="btn-row"><button class="btn btn-p" onclick="goNext(1)">Continuar →</button></div>
+</div>
+
+<!-- PASO 2 — MÓDULOS ACTIVABLES -->
+<div class="sec" id="s2">
+  <div class="eyebrow">Paso 2 de 4</div>
+  <div class="stitle">Activa los módulos que necesites</div>
+  <div class="sdesc">Cada módulo recopila datos para un servicio específico. Activa solo los que apliquen.</div>
+
+  <!-- MÓDULO A: VENTAS Y FINANZAS -->
+  <div class="module" id="mod_finance">
+    <div class="module-head" onclick="modTog('mod_finance')">
+      <div class="module-ico">💰</div>
+      <div class="module-info"><div class="module-title">Ventas e ingresos</div><div class="module-sub">Para reportes y análisis de rentabilidad</div></div>
+      <div class="module-toggle"></div>
+    </div>
+    <div class="module-body">
+      <div class="frow">
+        <div class="fg"><label class="fl" for="fin_sales">Ventas promedio mensuales</label><span class="fh">Aproximado en USD. Rango está bien.</span><input class="fi" type="text" id="fin_sales" placeholder="Ej. $3.000–4.000" name="fin_sales"></div>
+        <div class="fg"><label class="fl" for="fin_ticket">Ticket promedio por cliente</label><input class="fi" type="text" id="fin_ticket" placeholder="Ej. $12" name="fin_ticket"></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label class="fl" for="fin_customers">Clientes por día (aprox.)</label><input class="fi" type="text" id="fin_customers" placeholder="Ej. 40–60" name="fin_customers"></div>
+        <div class="fg"><label class="fl" for="fin_days">¿Día más fuerte y más flojo?</label><input class="fi" type="text" id="fin_days" placeholder="Ej. fuerte: viernes / flojo: martes" name="fin_days"></div>
+      </div>
+      <div class="fg"><label class="fl" for="fin_records">¿Llevas registro de ventas?</label>
+        <select class="fs" id="fin_records" name="fin_records"><option value="">—</option><option>Sí, sistema/software POS</option><option>Sí, en Excel</option><option>Sí, en cuaderno</option><option>No llevo registro</option></select></div>
+      <div class="fg" style="margin-bottom:0"><label class="fl" for="fin_costs">¿Cuáles son tus costos fijos mensuales?</label><span class="fh">Arriendo, sueldos, servicios, etc. Aproximado.</span><textarea class="ft" id="fin_costs" placeholder="Ej. Arriendo $800, 3 empleados $1.400, servicios $200…" style="min-height:60px" name="fin_costs"></textarea></div>
+    </div>
+  </div>
+
+  <!-- MÓDULO B: COSTEO DE PRODUCTOS -->
+  <div class="module" id="mod_costing">
+    <div class="module-head" onclick="modTog('mod_costing')">
+      <div class="module-ico">🧮</div>
+      <div class="module-info"><div class="module-title">Costeo de productos / recetas</div><div class="module-sub">Para saber cuánto ganas por cada producto</div></div>
+      <div class="module-toggle"></div>
+    </div>
+    <div class="module-body">
+      <div class="notice n-blue" style="margin-top:8px"><div class="nicon">💡</div><div>Lista tus productos más vendidos con su precio de venta. Los ingredientes/insumos detallados los recopilamos juntos después — aquí solo necesito un panorama.</div></div>
+      <div id="costRows"></div>
+      <button class="btn-add" onclick="addCostRow()">+ Agregar producto</button>
+      <div class="fg" style="margin-top:14px;margin-bottom:0"><label class="fl" for="cost_supplies">¿Tienes la lista de precios de tus insumos/proveedores?</label>
+        <select class="fs" id="cost_supplies" name="cost_supplies"><option value="">—</option><option>Sí, la tengo a la mano</option><option>Sí, pero desactualizada</option><option>No, habría que armarla</option></select></div>
+    </div>
+  </div>
+
+  <!-- MÓDULO C: INVENTARIO -->
+  <div class="module" id="mod_inventory">
+    <div class="module-head" onclick="modTog('mod_inventory')">
+      <div class="module-ico">📦</div>
+      <div class="module-info"><div class="module-title">Inventario y operación</div><div class="module-sub">Para ordenar el control de insumos</div></div>
+      <div class="module-toggle"></div>
+    </div>
+    <div class="module-body">
+      <div class="fg"><label class="fl" for="inv_method">¿Cómo controlas tu inventario hoy?</label>
+        <select class="fs" id="inv_method" name="inv_method"><option value="">—</option><option>Sistema/software</option><option>Excel</option><option>Cuaderno / a mano</option><option>No llevo control</option></select></div>
+      <div class="frow">
+        <div class="fg"><label class="fl" for="inv_freq">¿Cada cuánto compras insumos?</label><input class="fi" type="text" id="inv_freq" placeholder="Ej. 2 veces por semana" name="inv_freq"></div>
+        <div class="fg"><label class="fl" for="inv_suppliers">¿Cuántos proveedores tienes?</label><input class="fi" type="text" id="inv_suppliers" placeholder="Ej. 5" name="inv_suppliers"></div>
+      </div>
+      <div class="fg" style="margin-bottom:0"><label class="fl" for="inv_waste">¿Tienes problemas de desperdicio o productos que se vencen?</label><textarea class="ft" id="inv_waste" placeholder="Ej. Se nos daña la lechuga, sobra masa los lunes…" style="min-height:60px" name="inv_waste"></textarea></div>
+    </div>
+  </div>
+
+  <!-- MÓDULO D: EQUIPO Y PROCESOS -->
+  <div class="module" id="mod_team">
+    <div class="module-head" onclick="modTog('mod_team')">
+      <div class="module-ico">👥</div>
+      <div class="module-info"><div class="module-title">Equipo y procesos</div><div class="module-sub">Para digitalización administrativa</div></div>
+      <div class="module-toggle"></div>
+    </div>
+    <div class="module-body">
+      <div class="frow">
+        <div class="fg"><label class="fl" for="team_count">¿Cuántos empleados tienes?</label><input class="fi" type="text" id="team_count" placeholder="Ej. 4" name="team_count"></div>
+        <div class="fg"><label class="fl" for="team_shifts">¿Manejas turnos / horarios?</label><select class="fs" id="team_shifts" name="team_shifts"><option value="">—</option><option>Sí, organizados</option><option>Sí, pero desordenados</option><option>No</option></select></div>
+      </div>
+      <div class="fg" style="margin-bottom:0"><label class="fl" for="team_pain">¿Qué proceso administrativo te quita más tiempo?</label><textarea class="ft" id="team_pain" placeholder="Ej. Cuadrar caja, organizar turnos, controlar pedidos a proveedores…" style="min-height:60px" name="team_pain"></textarea></div>
+    </div>
+  </div>
+
+  <!-- MÓDULO E: METAS Y CONTEXTO -->
+  <div class="module" id="mod_goals">
+    <div class="module-head" onclick="modTog('mod_goals')">
+      <div class="module-ico">🎯</div>
+      <div class="module-info"><div class="module-title">Metas de negocio</div><div class="module-sub">Para consultoría y planificación</div></div>
+      <div class="module-toggle"></div>
+    </div>
+    <div class="module-body">
+      <div class="fg"><label class="fl" for="goal_year">¿Cuál es tu meta principal para este año?</label><textarea class="ft" id="goal_year" placeholder="Ej. Abrir otra sucursal, duplicar ventas, reducir costos…" style="min-height:60px" name="goal_year"></textarea></div>
+      <div class="fg"><label class="fl" for="goal_obstacle">¿Cuál es tu mayor obstáculo ahora mismo?</label><textarea class="ft" id="goal_obstacle" placeholder="Ej. No me alcanza el flujo de caja, no sé qué productos dejar de vender…" style="min-height:60px" name="goal_obstacle"></textarea></div>
+      <div class="fg" style="margin-bottom:0"><label class="fl" for="goal_consultant">¿Has trabajado antes con un consultor o asesor?</label>
+        <select class="fs" id="goal_consultant" name="goal_consultant"><option value="">—</option><option>Sí, buena experiencia</option><option>Sí, mala experiencia</option><option>No, sería la primera vez</option></select></div>
+    </div>
+  </div>
+
+  <div class="notice n-gray" style="margin-top:18px"><div class="nicon">ℹ️</div><div>Si no activas ningún módulo, igual puedes continuar y enviarme solo los archivos del siguiente paso.</div></div>
+
+  <div class="btn-row"><button class="btn btn-s" onclick="goPrev(2)">← Atrás</button><button class="btn btn-p" onclick="goNext(2)">Continuar →</button></div>
+</div>
+
+<!-- PASO 3 — ARCHIVOS FINANCIEROS -->
+<div class="sec" id="s3">
+  <div class="eyebrow">Paso 3 de 4</div>
+  <div class="stitle">Documentos y archivos</div>
+  <div class="sdesc">Para datos financieros usamos Google Drive — así llegan en máxima calidad y de forma segura.</div>
+  <div class="notice n-green" style="margin-bottom:18px">
+    <div class="nicon">📁</div>
+    <div><strong>Crea una carpeta privada de Drive solo para esto:</strong>
+      <ol class="drive-steps">
+        <li>En drive.google.com crea una carpeta nueva (ej. "Rumbo Co - Finanzas")</li>
+        <li>Sube ahí: reportes de ventas, Excel de costos, facturas, lo que tengas</li>
+        <li>Compártela con permiso <strong>"Cualquiera con el enlace"</strong> o directamente a mi correo</li>
+        <li>Pega el enlace abajo</li>
+      </ol>
+    </div>
+  </div>
+  <div class="fg">
+    <label class="fl" for="fin_drive">🔗 Enlace a la carpeta de documentos financieros</label>
+    <span class="fh">Si prefieres no usar Drive, puedes enviármelos por WhatsApp después.</span>
+    <input class="fi" type="url" id="fin_drive" placeholder="https://drive.google.com/drive/folders/…" name="fin_drive">
+  </div>
+  <div class="fg">
+    <label class="fl">¿Qué documentos incluiste o puedes conseguir?</label>
+    <div class="ck-grid" style="margin-top:8px">
+      <div class="ck-item" onclick="ckTog(this)"><input value="Reporte de ventas"><div class="ck-box"></div>📊 Reporte de ventas</div>
+      <div class="ck-item" onclick="ckTog(this)"><input value="Lista de costos/insumos"><div class="ck-box"></div>🧾 Costos / insumos</div>
+      <div class="ck-item" onclick="ckTog(this)"><input value="Facturas de proveedores"><div class="ck-box"></div>📄 Facturas</div>
+      <div class="ck-item" onclick="ckTog(this)"><input value="Estado de resultados"><div class="ck-box"></div>📈 Estado de resultados</div>
+      <div class="ck-item" onclick="ckTog(this)"><input value="Recetas / fichas técnicas"><div class="ck-box"></div>📋 Recetas / fichas</div>
+      <div class="ck-item" onclick="ckTog(this)"><input value="Nada por ahora"><div class="ck-box"></div>⏳ Nada por ahora</div>
+    </div>
+    <input type="hidden" id="docs_included" name="docs_included">
+  </div>
+  <div class="div"></div>
+  <div class="fg" style="margin-bottom:0">
+    <label class="fl" for="fin_notes">¿Algo más que deba saber sobre tus finanzas u operación?</label>
+    <textarea class="ft" id="fin_notes" placeholder="Cualquier contexto: deudas, temporada baja, planes de expansión, situación particular…" name="fin_notes"></textarea>
+  </div>
+  <div class="btn-row"><button class="btn btn-s" onclick="goPrev(3)">← Atrás</button><button class="btn btn-p" onclick="goNext(3)">Continuar →</button></div>
+</div>
+
+<!-- PASO 4 — ENVIAR -->
+<div class="sec" id="s4">
+  <div class="eyebrow">Paso 4 de 4</div>
+  <div class="stitle">Revisa y envía</div>
+  <div class="sdesc">Confirma que todo esté correcto.</div>
+  <div id="sumArea"></div>
+  <div class="confid">🔒 Confirmo que la información financiera compartida será tratada con estricta confidencialidad por Rumbo Co, usada solo para preparar los análisis y servicios acordados, y nunca compartida con terceros.</div>
+  <div class="fg"><div class="ck-full" onclick="ckSingle(this,'chk_ok')"><input type="checkbox" id="chk_ok" name="chk_ok"><div class="ck-box" style="margin-top:2px"></div><span>Confirmo que la información es correcta y acepto el acuerdo de confidencialidad.</span></div></div>
+  <button class="btn btn-p btn-full" id="sendBtn" onclick="doSubmit()" style="margin-top:14px">✓ Enviar datos avanzados</button>
+  <div class="btn-row" style="margin-top:10px"><button class="btn btn-s" style="width:100%" onclick="goPrev(4)">← Volver y editar</button></div>
+</div>
+
+<!-- ÉXITO -->
+<div class="suc-scr" id="sucScr">
+  <div class="suc-ico">✅</div>
+  <div class="suc-title">¡Datos recibidos!</div>
+  <div class="suc-desc" id="sucMsg"></div>
+  <div class="notice n-green" style="max-width:520px;width:100%;text-align:left;margin-bottom:16px"><div class="nicon">📩</div><div id="deliveryNote"></div></div>
+  <div class="copy-box">
+    <label class="fl" style="text-align:left;margin-bottom:8px" for="copyTa">📋 Copia de respaldo</label>
+    <textarea class="copy-ta" id="copyTa" readonly name="copyTa"></textarea>
+    <button class="btn btn-p btn-full" style="margin-top:10px" onclick="copyText()">Copiar y enviar por WhatsApp</button>
+    <div class="copy-ok" id="copyOk"></div>
+  </div>
+</div>
+</form>
+
+<script>
+const FORMSPREE_ID='mjgdjjkv';
+const TU_WHATSAPP='593963090563';
+let step=1;const TOTAL=4;
+let costCount=0;
+
+function nav(n){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('act'));
+  const el=document.getElementById('s'+n);if(!el)return;
+  el.classList.add('act');step=n;renderNav();
+  // ocultar intro tras paso 1
+  document.querySelector('.intro').style.display=n===1?'block':'none';
+  const hdrH=document.querySelector('.hdr').offsetHeight||56;
+  const snH=document.getElementById('snav').offsetHeight||44;
+  window.scrollTo({top:Math.max(0,el.getBoundingClientRect().top+window.scrollY-hdrH-snH-8),behavior:'smooth'});
+}
+function renderNav(){
+  document.getElementById('pFill').style.width=((step-1)/(TOTAL-1))*100+'%';
+  document.querySelectorAll('.spill').forEach(p=>{
+    const n=+p.dataset.s;p.classList.remove('act','don');
+    const sn=p.querySelector('.snum');
+    if(n===step){p.classList.add('act');sn.textContent=n;}
+    else if(n<step){p.classList.add('don');sn.textContent='✓';}
+    else sn.textContent=n;
+  });
+}
+function goNext(from){if(!validate(from))return;collectChecks();if(from===3)buildSummary();nav(from+1);}
+function goPrev(from){collectChecks();nav(from-1);}
+
+function validate(s){
+  clearErrs();
+  if(s===1){
+    if(!v('biz_name')){markErr('biz_name');return false;}
+    if(!v('owner_name')){markErr('owner_name');return false;}
+    if(!validPhone(v('biz_phone'))){markErr('biz_phone');showErr('Ingresa un teléfono válido (al menos 9 dígitos).');return false;}
+  }
+  return true;
+}
+function validPhone(s){return s.replace(/\D/g,'').length>=9;}
+function showErr(msg){let t=document.getElementById('toastErr');if(!t){t=document.createElement('div');t.id='toastErr';t.setAttribute('role','alert');t.style.cssText='position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#C0392B;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 6px 24px rgba(0,0,0,.25);z-index:999;max-width:90%;text-align:center';document.body.appendChild(t);}t.textContent=msg;t.style.display='block';clearTimeout(window._te);window._te=setTimeout(()=>{t.style.display='none';},4000);}
+function markErr(id){const el=document.getElementById(id);if(!el)return;el.classList.add('err');el.focus();el.addEventListener('input',()=>el.classList.remove('err'),{once:true});}
+function clearErrs(){document.querySelectorAll('.err').forEach(e=>e.classList.remove('err'));}
+
+function modTog(id){document.getElementById(id).classList.toggle('on');}
+
+function ckTog(el){el.classList.toggle('sel');const on=el.classList.contains('sel');el.querySelector('.ck-box').textContent=on?'✓':'';el.querySelector('input').checked=on;}
+function ckSingle(el,id){el.classList.toggle('sel');const on=el.classList.contains('sel');el.querySelector('.ck-box').textContent=on?'✓':'';document.getElementById(id).checked=on;}
+
+// FILAS DE COSTEO DINÁMICAS
+function addCostRow(){
+  costCount++;
+  const i=costCount;
+  const div=document.createElement('div');
+  div.className='recipe-row';div.id='costrow_'+i;
+  div.innerHTML=`<div><label class="fl">Producto</label><input class="fi" type="text" id="cost_prod_${i}" name="cost_prod_${i}" placeholder="Nombre"></div>
+    <div><label class="fl">Precio venta</label><input class="fi" type="text" id="cost_price_${i}" name="cost_price_${i}" placeholder="$"></div>
+    <div><label class="fl">¿Es estrella?</label><select class="fs" id="cost_star_${i}" name="cost_star_${i}"><option value="No">No</option><option value="Sí">Sí ⭐</option></select></div>
+    <button class="btn-del" onclick="delCostRow(${i})">×</button>`;
+  document.getElementById('costRows').appendChild(div);
+}
+function delCostRow(i){const el=document.getElementById('costrow_'+i);if(el)el.remove();}
+
+function collectChecks(){
+  setHidden('s1','services_wanted');
+  setHidden('s3','docs_included');
+}
+function setHidden(secId,hiddenId){
+  const sel=Array.from(document.querySelectorAll('#'+secId+' .ck-item.sel')).map(e=>e.querySelector('input').value);
+  const h=document.getElementById(hiddenId);if(h)h.value=sel.join(', ');
+}
+
+function v(id){const el=document.getElementById(id);return el?el.value.trim():'';}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function now(){return new Date().toLocaleDateString('es-EC',{day:'numeric',month:'long',year:'numeric'});}
+function modOn(id){return document.getElementById(id).classList.contains('on');}
+
+function costText(){
+  let out=[];
+  for(let i=1;i<=costCount;i++){
+    if(v('cost_prod_'+i)){
+      out.push('  • '+v('cost_prod_'+i)+' — '+(v('cost_price_'+i)||'?')+(v('cost_star_'+i)==='Sí'?' ⭐':''));
+    }
+  }
+  return out.length?out.join('\n'):'  (sin productos listados)';
+}
+
+function buildSummary(){
+  collectChecks();
+  function row(k,val){return'<div class="si"><span class="si-k">'+k+'</span><span class="si-v">'+esc(val||'—')+'</span></div>';}
+  let mods=[];
+  if(modOn('mod_finance'))mods.push('Ventas e ingresos');
+  if(modOn('mod_costing'))mods.push('Costeo de productos');
+  if(modOn('mod_inventory'))mods.push('Inventario');
+  if(modOn('mod_team'))mods.push('Equipo y procesos');
+  if(modOn('mod_goals'))mods.push('Metas de negocio');
+  document.getElementById('sumArea').innerHTML=`
+  <div class="scard"><h4>📋 Identificación</h4>${row('Negocio',v('biz_name'))}${row('Propietario',v('owner_name'))}${row('Teléfono',v('biz_phone'))}${row('Servicios de interés',v('services_wanted'))}</div>
+  <div class="scard"><h4>📦 Módulos activados</h4>${row('Módulos',mods.length?mods.join(', '):'Ninguno')}</div>
+  <div class="scard"><h4>📁 Archivos</h4>${row('Carpeta Drive',v('fin_drive'))}${row('Documentos',v('docs_included'))}</div>`;
+}
+
+function buildText(){
+  collectChecks();
+  const L=['DATOS AVANZADOS - RUMBO CO','=============================','Fecha: '+now(),'',
+    '── IDENTIFICACIÓN ──',
+    'Negocio:     '+v('biz_name'),
+    'Propietario: '+v('owner_name'),
+    'Teléfono:    '+v('biz_phone'),
+    'Interesa:    '+(v('services_wanted')||'—'),''];
+  if(modOn('mod_finance')){L.push('── VENTAS E INGRESOS ──','Ventas/mes:  '+(v('fin_sales')||'—'),'Ticket prom: '+(v('fin_ticket')||'—'),'Clientes/día: '+(v('fin_customers')||'—'),'Días f/f:    '+(v('fin_days')||'—'),'Registro:    '+(v('fin_records')||'—'),'Costos fijos: '+(v('fin_costs')||'—'),'');}
+  if(modOn('mod_costing')){L.push('── COSTEO DE PRODUCTOS ──',costText(),'Insumos:     '+(v('cost_supplies')||'—'),'');}
+  if(modOn('mod_inventory')){L.push('── INVENTARIO ──','Método:      '+(v('inv_method')||'—'),'Frecuencia:  '+(v('inv_freq')||'—'),'Proveedores: '+(v('inv_suppliers')||'—'),'Desperdicio: '+(v('inv_waste')||'—'),'');}
+  if(modOn('mod_team')){L.push('── EQUIPO Y PROCESOS ──','Empleados:   '+(v('team_count')||'—'),'Turnos:      '+(v('team_shifts')||'—'),'Proceso pesado: '+(v('team_pain')||'—'),'');}
+  if(modOn('mod_goals')){L.push('── METAS ──','Meta año:    '+(v('goal_year')||'—'),'Obstáculo:   '+(v('goal_obstacle')||'—'),'Consultor previo: '+(v('goal_consultant')||'—'),'');}
+  L.push('── ARCHIVOS ──','Carpeta Drive: '+(v('fin_drive')||'—'),'Documentos:  '+(v('docs_included')||'—'),'Notas:       '+(v('fin_notes')||'—'),'','✓ Aceptó confidencialidad financiera.','=========================');
+  return L.join('\n');
+}
+
+async function doSubmit(){
+  if(!document.getElementById('chk_ok').checked){showErr('Acepta el acuerdo de confidencialidad antes de enviar.');return;}
+  const btn=document.getElementById('sendBtn');btn.disabled=true;btn.innerHTML='<span class="spin"></span> Enviando…';
+  const txt=buildText();let sent=false;
+  if(FORMSPREE_ID&&FORMSPREE_ID.length>4){
+    try{
+      const fd=new FormData();
+      fd.append('negocio',v('biz_name'));
+      fd.append('propietario',v('owner_name'));
+      fd.append('telefono',v('biz_phone'));
+      fd.append('servicios_interes',v('services_wanted'));
+      fd.append('carpeta_drive',v('fin_drive'));
+      fd.append('documentos',v('docs_included'));
+      fd.append('resumen_avanzado',txt);
+      fd.append('_subject','Datos avanzados: '+v('biz_name'));
+      const hp=document.querySelector('input[name="_gotcha"]');if(hp&&hp.value)fd.append('_gotcha',hp.value);
+      const res=await fetch('https://formspree.io/f/'+FORMSPREE_ID,{method:'POST',body:fd,headers:{Accept:'application/json'}});
+      if(res.ok)sent=true;else console.warn('Formspree:',res.status);
+    }catch(e){console.warn('Red:',e);}
+  }
+  btn.disabled=false;btn.innerHTML='✓ Enviado';
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('act'));
+  document.getElementById('snav').style.display='none';
+  document.querySelector('.intro').style.display='none';
+  document.getElementById('pFill').style.width='100%';
+  document.getElementById('sucMsg').textContent='Recibí los datos avanzados de '+(v('biz_name')||'tu negocio')+'. Voy a preparar una propuesta de servicios premium y te contacto pronto.';
+  document.getElementById('deliveryNote').innerHTML=sent?'<strong>✅ Datos enviados correctamente.</strong> Guarda esta copia de respaldo.':'<strong>⚠️ No se pudo enviar automáticamente.</strong> Copia el resumen y envíamelo por WhatsApp.';
+  document.getElementById('copyTa').value=txt;
+  document.getElementById('sucScr').classList.add('act');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function copyText(){
+  const ta=document.getElementById('copyTa');ta.select();ta.setSelectionRange(0,99999);
+  try{navigator.clipboard.writeText(ta.value).then(()=>afterCopy(true)).catch(()=>{document.execCommand('copy');afterCopy(true);});}
+  catch(e){try{document.execCommand('copy');afterCopy(true);}catch{afterCopy(false);}}
+  if(TU_WHATSAPP&&TU_WHATSAPP.length>6){
+    const p=encodeURIComponent('Hola, soy '+v('biz_name')+'. Te envío mis datos avanzados para Rumbo Co.');
+    setTimeout(()=>window.open('https://wa.me/'+TU_WHATSAPP+'?text='+p,'_blank'),800);
+  }
+}
+function afterCopy(ok){const el=document.getElementById('copyOk');el.textContent=ok?'✓ Copiado — pégalo en WhatsApp.':'Selecciona el texto manualmente (Ctrl+A, Ctrl+C).';el.style.color=ok?'var(--brand)':'var(--err)';setTimeout(()=>{el.textContent='';},5000);}
+
+// INIT
+document.querySelectorAll('#mainForm button:not([type])').forEach(b=>b.type='button');
+document.querySelectorAll('.ck-item,.ck-full,.module-head').forEach(el=>{
+  el.setAttribute('tabindex','0');el.setAttribute('role','button');
+  el.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();el.click();}});
+});
+document.querySelectorAll('.spill').forEach(p=>{
+  p.setAttribute('tabindex','0');p.setAttribute('role','button');
+  const go=()=>{const n=+p.dataset.s;if(n<step){collectChecks();nav(n);}};
+  p.addEventListener('click',go);
+  p.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();go();}});
+});
+addCostRow();
+renderNav();
+</script>
+</body>
+</html>
